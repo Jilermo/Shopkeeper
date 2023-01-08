@@ -23,6 +23,15 @@ public class CharacterCustomization : MonoBehaviour
     Sprite[] hairSprites = new Sprite[28];
     Sprite[] accesorySprites = new Sprite[28];
 
+    private void Awake()
+    {
+        numberOfBodies = GlobalVariables.numberOfBodies;
+        numberOfEyes = GlobalVariables.numberOfEyes;
+        numberOfOutfits = GlobalVariables.numberOfOutfits;
+        numberOfHairs = GlobalVariables.numberOfHairs;
+        numberOfAccesories = GlobalVariables.numberOfAccesories;
+    }
+
     private void Start()
     {
         changeBody(Random.Range(0, numberOfBodies));

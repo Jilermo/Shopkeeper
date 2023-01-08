@@ -25,26 +25,27 @@ public class PlayerController : CharacterController
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) && !pressed)
+        if (Input.GetKeyDown(KeyCode.W))
         {
             UP.Invoke();
             pressed = true;
         }
-        else if (Input.GetKeyDown(KeyCode.A) && !pressed)
+        if (Input.GetKeyDown(KeyCode.A))
         {
             LEFT.Invoke();
             pressed = true;
         }
-        else if (Input.GetKeyDown(KeyCode.S) && !pressed)
+        if (Input.GetKeyDown(KeyCode.S))
         {
             DOWN.Invoke();
             pressed = true;
         }
-        else if (Input.GetKeyDown(KeyCode.D) && !pressed)
+        if (Input.GetKeyDown(KeyCode.D))
         {
             RIGHT.Invoke();
             pressed = true;
-        }else if (!Input.anyKey && pressed)
+        }
+        else if (!Input.anyKey && pressed)
         {
             STOP.Invoke();
             pressed = false;
