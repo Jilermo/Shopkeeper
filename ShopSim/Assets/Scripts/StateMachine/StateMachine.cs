@@ -6,6 +6,8 @@ public class StateMachine : MonoBehaviour
 
     private State mainStateType;
 
+    public CharacterCustomization characterCustomization;
+
     public State CurrentState { get; private set; }
     private State nextState;
 

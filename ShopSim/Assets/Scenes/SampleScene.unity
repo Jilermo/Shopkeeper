@@ -482,7 +482,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -469958074242675662, guid: d040f35191da51f4182569ae800499c2, type: 3}
+  m_Sprite: {fileID: 334409789313613232, guid: d040f35191da51f4182569ae800499c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -612,6 +612,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 673186809}
+  - component: {fileID: 673186810}
+  - component: {fileID: 673186812}
+  - component: {fileID: 673186811}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -627,7 +630,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 673186808}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.87792635, y: 1.2463758, z: 0.083018094}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -639,6 +642,68 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &673186810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673186808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e556e2bb18def1b46a2b1a8cbf8bc47b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 602987771}
+  eyes: {fileID: 312316926}
+  outfit: {fileID: 982149272}
+  hair: {fileID: 1299689230}
+  accesory: {fileID: 1452361}
+  numberOfBodies: 8
+  numberOfEyes: 6
+  numberOfOutfits: 131
+  numberOfHairs: 199
+  numberOfAccesories: 83
+--- !u!114 &673186811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673186808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb23936e25228c41a331b3771619f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationsDuration: 0.13
+--- !u!114 &673186812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673186808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0977d675d3d02324f84d77b44f49137a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UP:
+    m_PersistentCalls:
+      m_Calls: []
+  DOWN:
+    m_PersistentCalls:
+      m_Calls: []
+  LEFT:
+    m_PersistentCalls:
+      m_Calls: []
+  RIGHT:
+    m_PersistentCalls:
+      m_Calls: []
+  STOP:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &982149270
 GameObject:
   m_ObjectHideFlags: 0
