@@ -11,11 +11,11 @@ public class CharacterCustomization : MonoBehaviour
     public SpriteRenderer hair;
     public SpriteRenderer accesory;
 
-    public int numberOfBodies;
-    public int numberOfEyes;
-    public int numberOfOutfits;
-    public int numberOfHairs;
-    public int numberOfAccesories;
+    int numberOfBodies;
+    int numberOfEyes;
+    int numberOfOutfits;
+    int numberOfHairs;
+    int numberOfAccesories;
 
     Sprite[] bodySprites=new Sprite[28];
     Sprite[] eyesSprites = new Sprite[28];
