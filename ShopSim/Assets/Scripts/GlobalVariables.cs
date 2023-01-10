@@ -10,12 +10,12 @@ public static class GlobalVariables
         public float x;
         public float y;
 
-        int clothStandType;
+        public int clothStandType;
 
-        int outfitIndex;
-        int eyeIndex;
-        int accesoryIndex;
-        int hairstyleIndex;
+        public int outfitIndex;
+        public int eyeIndex;
+        public int accesoryIndex;
+        public int hairstyleIndex;
         public ClothStandSave(float _x,float _y, int _clothStandType, int _outfitIndex, int _eyeIndex, int _accesoryIndex, int _hairstyleIndex)
         {
             x = _x;

@@ -23,13 +23,19 @@ public class ClothStandCustomization : MonoBehaviour
 
     ClothStand clothStand;
 
+    public bool notSave=false;
+    public bool loaded=false;
+
     private void Start()
     {
         clothStand = GetComponent<ClothStand>();
-        changeEyes(0);
-        changeOutfit(0);
-        changeHair(0);
-        changeAccesory(0);
+        if (!loaded)
+        {
+            changeEyes(0);
+            changeOutfit(0);
+            changeHair(0);
+            changeAccesory(0);
+        }
     }
 
     public void changeClotheType(int _index, CharacterCustomization.ClothingType _clothingType)
@@ -55,6 +61,7 @@ public class ClothStandCustomization : MonoBehaviour
 
     public void changeEyes(int _number)
     {
+        clothStand = GetComponent<ClothStand>();
         if (_number < GlobalVariables.numberOfEyes && _number >= 0)
         {
             Object[] sprites;
@@ -62,11 +69,16 @@ public class ClothStandCustomization : MonoBehaviour
             eyes.sprite = (Sprite)sprites[4];
             eyesIndex = _number;
         }
-        clothStand.saveClothStand();
+        if (!notSave)
+        {
+            clothStand.saveClothStand();
+        }
+        
     }
 
     public void changeOutfit(int _number)
     {
+        clothStand = GetComponent<ClothStand>();
         if (_number < GlobalVariables.numberOfOutfits && _number >= 0)
         {
             Object[] sprites;
@@ -74,11 +86,16 @@ public class ClothStandCustomization : MonoBehaviour
             outfit.sprite = (Sprite)sprites[4];
             outfitIndex = _number;
         }
-        clothStand.saveClothStand();
+        if (!notSave)
+        {
+            clothStand.saveClothStand();
+        }
+        
     }
 
     public void changeHair(int _number)
     {
+        clothStand = GetComponent<ClothStand>();
         if (_number < GlobalVariables.numberOfHairs && _number >= 0)
         {
             Object[] sprites;
@@ -86,11 +103,16 @@ public class ClothStandCustomization : MonoBehaviour
             hair.sprite = (Sprite)sprites[4];
             hairIndex = _number;
         }
-        clothStand.saveClothStand();
+        if (!notSave)
+        {
+            clothStand.saveClothStand();
+        }
+
     }
 
     public void changeAccesory(int _number)
     {
+        clothStand = GetComponent<ClothStand>();
         if (_number < GlobalVariables.numberOfAccesories && _number >= 0)
         {
             Object[] sprites;
@@ -98,7 +120,11 @@ public class ClothStandCustomization : MonoBehaviour
             accesory.sprite = (Sprite)sprites[4];
             accesoryIndex = _number;
         }
-        clothStand.saveClothStand();
+        if (!notSave)
+        {
+            clothStand.saveClothStand();
+        }
+        
     }
 
 }

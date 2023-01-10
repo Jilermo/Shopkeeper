@@ -22,21 +22,56 @@ public class ClothStand : MonoBehaviour
 
     GlobalVariables.ClothStandSave clothStandSave;
 
+    public bool loaded = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        floorGrid = GameObject.Find("FloorGrid").GetComponent<TestFloorGrid>();
+        if (!loaded)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+            GlobalVariables.controllingPlayer = false;
+            GlobalVariables.placingObject = true;
+            floorGrid.setGridVisibility(true);
+        }
+        else
+        {
+            placed = true;
+        }
         clothStandCustomization = GetComponent<ClothStandCustomization>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprites[ClothStandIndex];
 
         sprite = spriteRenderer.sprite;
 
-        floorGrid = GameObject.Find("FloorGrid").GetComponent<TestFloorGrid>();
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
-        GlobalVariables.controllingPlayer = false;
-        GlobalVariables.placingObject = true;
-        floorGrid.setGridVisibility(true);
+       
+        
         interactable = new ClothStandInteractable(clothStandCustomization,this);
+    }
+
+    public void placeClothStand(float _x, float _y, int _index, int _outfitIndex, int _HairIndex, int _eyeIndex, int _accesoryIndex, GlobalVariables.ClothStandSave _clothStandSave)
+    {
+        clothStandSave = _clothStandSave;
+        ClothStandIndex = _index;
+        clothStandCustomization = GetComponent<ClothStandCustomization>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = sprites[ClothStandIndex];
+        transform.position = new Vector3(_x, _y, 0f);
+        clothStandCustomization.loaded = true;
+        clothStandCustomization.notSave = true;
+        clothStandCustomization.changeOutfit(_outfitIndex);
+        clothStandCustomization.changeHair(_HairIndex);
+        clothStandCustomization.changeEyes(_eyeIndex);
+        clothStandCustomization.changeAccesory(_accesoryIndex);
+        clothStandCustomization.notSave = false;
+        floorGrid = GameObject.Find("FloorGrid").GetComponent<TestFloorGrid>();
+        sprite = spriteRenderer.sprite;
+        Vector3 _xmin = spriteRenderer.bounds.min;
+        Vector3 _xmax = spriteRenderer.bounds.max;
+        interactable = new ClothStandInteractable(clothStandCustomization, this);
+        floorGrid.floorGrid.setCellsWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y), false, interactable);
+        loaded = true;
     }
 
     // Update is called once per frame
@@ -75,7 +110,7 @@ public class ClothStand : MonoBehaviour
     public void saveClothStand()
     {
         quitClothStand();
-        clothStandSave = new GlobalVariables.ClothStandSave(spriteRenderer.bounds.center.x, spriteRenderer.bounds.center.y, ClothStandIndex, clothStandCustomization.outfitIndex, clothStandCustomization.eyesIndex, clothStandCustomization.accesoryIndex, clothStandCustomization.hairIndex);
+        clothStandSave = new GlobalVariables.ClothStandSave(transform.position.x, transform.position.y, ClothStandIndex, clothStandCustomization.outfitIndex, clothStandCustomization.eyesIndex, clothStandCustomization.accesoryIndex, clothStandCustomization.hairIndex);
         GlobalVariables.saveData.clothStands.Add(clothStandSave);
     }
 

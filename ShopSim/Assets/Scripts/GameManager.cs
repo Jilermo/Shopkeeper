@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,9 +23,27 @@ public class GameManager : MonoBehaviour
 
     float startTime;
     float lastSpawn;
+
+    public GameObject placeObjectPrefab;
+    public Transform placeObjectTransform;
+
+    public GameObject clothStandPrefab;
+    public Transform clothStandTransform;
+
     private void Awake()
     {
-        GlobalVariables.saveData = new GlobalVariables.SaveData();
+
+        string _path = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
+        if (System.IO.File.Exists(_path))
+        {
+            loadData();
+        }
+        else
+        {
+            GlobalVariables.saveData = new GlobalVariables.SaveData();
+        }
+        
+        
     }
     
 
@@ -92,6 +111,49 @@ public class GameManager : MonoBehaviour
         string _path = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
 
         string json = JsonUtility.ToJson(GlobalVariables.saveData);
-        Debug.Log(json);
+
+        using StreamWriter writer = new StreamWriter(_path);
+        writer.Write(json);
     }
+
+    public void loadData()
+    {
+        string _path = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
+        using StreamReader reader = new StreamReader(_path);
+
+        string json = reader.ReadToEnd();
+        GlobalVariables.SaveData _saveData = JsonUtility.FromJson<GlobalVariables.SaveData>(json);
+        GlobalVariables.saveData = _saveData;
+        StartCoroutine(load(_saveData));
+
+    }
+
+    IEnumerator load(GlobalVariables.SaveData _saveData)
+    {
+        yield return new WaitForSeconds(0.2f);
+        for (int i = 0; i < _saveData.commonObjects.Count; i++)
+        {
+            GameObject placedObject = Instantiate(placeObjectPrefab, placeObjectTransform);
+            placedObject.GetComponent<PlacedObject>().placeObject(_saveData.commonObjects[i].x, _saveData.commonObjects[i].y, _saveData.commonObjects[i].index, _saveData.commonObjects[i].category, _saveData.commonObjects[i]);
+        }
+
+        for (int i = 0; i < _saveData.clothStands.Count; i++)
+        {
+            GameObject _clothStands = Instantiate(clothStandPrefab, clothStandTransform);
+            _clothStands.GetComponent<ClothStand>().placeClothStand(_saveData.clothStands[i].x, _saveData.clothStands[i].y, _saveData.clothStands[i].clothStandType, _saveData.clothStands[i].outfitIndex, _saveData.clothStands[i].hairstyleIndex, _saveData.clothStands[i].eyeIndex, _saveData.clothStands[i].accesoryIndex, _saveData.clothStands[i]);
+        }
+    }
+
+    public void reseSave()
+    {
+        string _path = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
+
+        string json = JsonUtility.ToJson(new GlobalVariables.SaveData());
+
+        using StreamWriter writer = new StreamWriter(_path);
+        writer.Write(json);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
 }

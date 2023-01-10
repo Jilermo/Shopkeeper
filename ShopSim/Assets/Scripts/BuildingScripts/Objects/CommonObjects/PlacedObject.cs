@@ -21,17 +21,45 @@ public class PlacedObject : MonoBehaviour
 
     GlobalVariables.PlacedCommonObjects commonObjectSave;
 
+    public bool loaded = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        floorGrid = GameObject.Find("FloorGrid").GetComponent<TestFloorGrid>();
+        if (!loaded)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+            GlobalVariables.controllingPlayer = false;
+            GlobalVariables.placingObject = true;
+            floorGrid.setGridVisibility(true);
+        }
+        else
+        {
+            placed = true;
+        }
+
+        
         spriteRenderer = GetComponent<SpriteRenderer>();
         sprite = spriteRenderer.sprite;
-        floorGrid = GameObject.Find("FloorGrid").GetComponent<TestFloorGrid>();
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
-        GlobalVariables.controllingPlayer = false;
-        GlobalVariables.placingObject = true;
-        floorGrid.setGridVisibility(true);
         interactable = new CommonObjectInteractable(this);
+    }
+
+    public void placeObject(float _x,float _y,int _categoryIndex, int _index, GlobalVariables.PlacedCommonObjects _commonObjectSave)
+    {
+        commonObjectSave = _commonObjectSave;
+        transform.position = new Vector3(_x,_y,0f);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        floorGrid = GameObject.Find("FloorGrid").GetComponent<TestFloorGrid>();
+        Object[] sprites;
+        sprites = Resources.LoadAll("Building/Objects/" + _categoryIndex + "/" + _index);
+        GetComponent<SpriteRenderer>().sprite = (Sprite)sprites[1];
+        sprite = spriteRenderer.sprite;
+        Vector3 _xmin = spriteRenderer.bounds.min;
+        Vector3 _xmax = spriteRenderer.bounds.max;
+        interactable = new CommonObjectInteractable(this);
+        floorGrid.floorGrid.setCellsWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y), false, interactable);
+        loaded = true;
     }
 
     // Update is called once per frame

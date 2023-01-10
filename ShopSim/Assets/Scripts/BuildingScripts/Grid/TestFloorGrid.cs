@@ -17,11 +17,17 @@ public class TestFloorGrid : MonoBehaviour
     public PlayerController player;
 
     public GameObject lineGridContainer;
+
+    private void Awake()
+    {
+        floorGrid = new FloorGrid(width, height, size, originPosition, linePrefab, linesParentTransform, player);
+        grid = floorGrid.GetGrid();
+    }
+
     void Start()
     {
         //grid = new Grid<FloorGridClass>(width, height, size, originPosition, linePrefab, linesParentTransform, (x, y) => new FloorGridClass());
-        floorGrid = new FloorGrid(width, height, size, originPosition, linePrefab, linesParentTransform,player);
-        grid = floorGrid.GetGrid();
+        
     }
 
    
