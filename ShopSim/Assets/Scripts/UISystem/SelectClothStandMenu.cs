@@ -19,11 +19,11 @@ public class SelectClothStandMenu : UIMenuClass
         gameObject.SetActive(true);
         if (_x > 4.5f)
         {
-            transform.position = new Vector3(_x - 4f, _y, 0f);
+            transform.position = new Vector3(_x - 4f, 0f, 0f);
         }
         else
         {
-            transform.position = new Vector3(_x + 4f, _y, 0f);
+            transform.position = new Vector3(_x + 4f, 0f, 0f);
         }
 
     }

@@ -42,11 +42,11 @@ public class CharacterCustomization : MonoBehaviour
 
     private void Start()
     {
-        changeBody(Random.Range(0, numberOfBodies));
-        changeEyes(Random.Range(0, numberOfEyes));
-        changeOutfit(Random.Range(0, numberOfOutfits));
-        changeHair(Random.Range(0, numberOfHairs));
-        changeAccesory(Random.Range(0, numberOfAccesories));
+        changeBody(GlobalVariables.saveData.bodyIndex);
+        changeEyes(GlobalVariables.saveData.eyeIndex);
+        changeOutfit(GlobalVariables.saveData.outfitIndex);
+        changeHair(GlobalVariables.saveData.hairstyleIndex);
+        changeAccesory(GlobalVariables.saveData.accesoryIndex);
     }
 
 
@@ -63,6 +63,7 @@ public class CharacterCustomization : MonoBehaviour
             }
             //bodySprites = (Sprite[])sprites;
             body.sprite = bodySprites[4];
+            GlobalVariables.saveData.bodyIndex = _number;
         }
     }
 
@@ -77,6 +78,7 @@ public class CharacterCustomization : MonoBehaviour
                 eyesSprites[i - 1] = (Sprite)sprites[i];
             }
             eyes.sprite = eyesSprites[4];
+            GlobalVariables.saveData.eyeIndex = _number;
         }
     }
 
@@ -91,6 +93,7 @@ public class CharacterCustomization : MonoBehaviour
                 outfitSprites[i - 1] = (Sprite)sprites[i];
             }
             outfit.sprite = outfitSprites[4];
+            GlobalVariables.saveData.outfitIndex = _number;
         }
     }
 
@@ -105,6 +108,7 @@ public class CharacterCustomization : MonoBehaviour
                 hairSprites[i - 1] = (Sprite)sprites[i];
             }
             hair.sprite = hairSprites[4];
+            GlobalVariables.saveData.hairstyleIndex = _number;
         }
     }
 
@@ -119,6 +123,7 @@ public class CharacterCustomization : MonoBehaviour
                 accesorySprites[i - 1] = (Sprite)sprites[i];
             }
             accesory.sprite = accesorySprites[4];
+            GlobalVariables.saveData.accesoryIndex = _number;
         }
     }
 

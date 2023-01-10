@@ -111,4 +111,14 @@ public class ClothStand : MonoBehaviour
         placed = false;
         quitClothStand();
     }
+
+    public void sell()
+    {
+        GlobalVariables.saveData.numberOfCoins += (50 + (ClothStandIndex * 100));
+        Vector3 _xmin = spriteRenderer.bounds.min;
+        Vector3 _xmax = spriteRenderer.bounds.max;
+        floorGrid.floorGrid.setCellsNotWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y));
+        quitClothStand();
+        Destroy(gameObject);
+    }
 }

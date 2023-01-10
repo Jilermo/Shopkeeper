@@ -16,6 +16,11 @@ public class PlacedObject : MonoBehaviour
 
     InteractableObject interactable;
 
+    public int index;
+    public int categoryIndex;
+
+    GlobalVariables.PlacedCommonObjects commonObjectSave;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +29,9 @@ public class PlacedObject : MonoBehaviour
         floorGrid = GameObject.Find("FloorGrid").GetComponent<TestFloorGrid>();
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
         GlobalVariables.controllingPlayer = false;
+        GlobalVariables.placingObject = true;
+
+        interactable = new CommonObjectInteractable(this);
     }
 
     // Update is called once per frame
@@ -49,11 +57,32 @@ public class PlacedObject : MonoBehaviour
                 placed = true;
                 Vector3 _xmin = spriteRenderer.bounds.min;
                 Vector3 _xmax = spriteRenderer.bounds.max;
-                floorGrid.floorGrid.setCellsWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y), false,interactable);
+                floorGrid.floorGrid.setCellsWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y), false, interactable);
                 GlobalVariables.controllingPlayer = true;
+                GlobalVariables.placingObject = false;
+
+                saveClothStand();
             }
         }
     }
+
+    public void saveClothStand()
+    {
+        quitClothStand();
+        commonObjectSave = new GlobalVariables.PlacedCommonObjects(spriteRenderer.bounds.center.x, spriteRenderer.bounds.center.y, index, categoryIndex);
+    }
+
+    public void quitClothStand()
+    {
+        if (commonObjectSave != null)
+        {
+            if (GlobalVariables.saveData.commonObjects.Contains(commonObjectSave))
+            {
+                GlobalVariables.saveData.commonObjects.Remove(commonObjectSave);
+            }
+        }
+    }
+
 
     public bool CheckIfGridIsValid()
     {
@@ -65,6 +94,27 @@ public class PlacedObject : MonoBehaviour
     public Vector2 GetMouseWorldPosition()
     {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    public void move()
+    {
+        GlobalVariables.controllingPlayer = false;
+        GlobalVariables.placingObject = true;
+        Vector3 _xmin = spriteRenderer.bounds.min;
+        Vector3 _xmax = spriteRenderer.bounds.max;
+        floorGrid.floorGrid.setCellsNotWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y));
+        placed = false;
+        quitClothStand();
+    }
+
+    public void sell()
+    {
+        GlobalVariables.saveData.numberOfCoins += GlobalVariables.objectsPrices;
+        Vector3 _xmin = spriteRenderer.bounds.min;
+        Vector3 _xmax = spriteRenderer.bounds.max;
+        floorGrid.floorGrid.setCellsNotWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y));
+        quitClothStand();
+        Destroy(gameObject);
     }
 
 }

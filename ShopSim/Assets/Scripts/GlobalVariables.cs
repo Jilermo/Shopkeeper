@@ -35,7 +35,7 @@ public static class GlobalVariables
         int category;
         int index;
         
-        public PlacedCommonObjects(int _x, int _y, int _category, int _index)
+        public PlacedCommonObjects(float _x, float _y, int _category, int _index)
         {
             x = _x;
             y = _y;
@@ -122,6 +122,7 @@ public static class GlobalVariables
     }
 
     public static SaveData saveData;
+    public static readonly List<int> numberOfObjects= new List<int> { 122,158,555,75,249,46,209,77,29,240,28,102,343,123,483,344,532,131,80,451,170};
     public static readonly bool debug = true;
     public static readonly int numberOfBodies=9;
     public static readonly int numberOfEyes =7;
@@ -134,5 +135,7 @@ public static class GlobalVariables
     public static bool placingObject = false;
 
     public static readonly int clothsPrices =50;
+    public static readonly int objectsPrices = 25;
+    public static readonly int categoryBuyPrice = 200;
 
 }

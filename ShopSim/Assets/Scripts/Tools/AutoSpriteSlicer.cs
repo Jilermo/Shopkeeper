@@ -43,7 +43,7 @@ public class AutoSpriteSlicer
 		//methos for splicing objects
 
 		
-		int minimumSpriteSize = 16;
+		int minimumSpriteSize = 1;
 		int extrudeSize = 0;
 
 		Rect[] rects = InternalSpriteUtility.GenerateAutomaticSpriteRectangles(texture, minimumSpriteSize, extrudeSize);

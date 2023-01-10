@@ -18,11 +18,11 @@ public class UserMenuUI : UIMenuClass
         gameObject.SetActive(true);
         if (_x > 4.5f)
         {
-            transform.position = new Vector3(_x - 2f, _y, 0f);
+            transform.position = new Vector3(_x - 2f, 0f, 0f);
         }
         else
         {
-            transform.position = new Vector3(_x + 2f, _y, 0f);
+            transform.position = new Vector3(_x + 2f, 0f, 0f);
         }
     }
 
@@ -35,6 +35,12 @@ public class UserMenuUI : UIMenuClass
     public void OpenClothsStandMenu()
     {
         mainUIScript.selectClothStandMenu.openMenu(x, y, mainUIScript);
+        closeAllMenus();
+    }
+
+    public void OpenBuyObjectsMenu()
+    {
+        mainUIScript.buyObjectsMenu.openMenu(x, y, mainUIScript);
         closeAllMenus();
     }
 
