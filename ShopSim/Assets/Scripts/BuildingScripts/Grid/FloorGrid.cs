@@ -193,7 +193,7 @@ public partial class FloorGrid
 
         for (int c = 0; c < _stepsX; c++)
         {
-            for (int r = 0; r < _stepsX; r++)
+            for (int r = 0; r < _stepsY; r++)
             {
                 float _xToCheck = _x.x + _stepX * c;
                 if (_xToCheck>_x.y)

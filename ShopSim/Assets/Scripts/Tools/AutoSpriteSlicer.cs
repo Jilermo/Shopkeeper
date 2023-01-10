@@ -16,6 +16,7 @@ public class AutoSpriteSlicer
 		foreach (var texture in textures)
 		{
 			ProcessTexture(texture);
+			ProcessTexture(texture);
 		}
 	}
 
@@ -38,7 +39,10 @@ public class AutoSpriteSlicer
 		textureSettings.spriteExtrude = 0;
 
 		importer.SetTextureSettings(textureSettings);
-		/*
+
+		//methos for splicing objects
+
+		
 		int minimumSpriteSize = 16;
 		int extrudeSize = 0;
 
@@ -58,14 +62,13 @@ public class AutoSpriteSlicer
 			meta.rect = rect;
 			meta.name = filenameNoExtension + "_" + rectNum++;
 			metas.Add(meta);
-		}*/
+		}
 
+
+		/*
+		//Method for splicing character related textures
 		int spriteSizeX = 48;
 		int spriteSizeY = 96;
-		//int colCount = texture.width / spriteSize;
-		//int rowCount = texture.height / spriteSize;
-		//int colCount = 24;
-		//int rowCount = 3;
 
 		List<SpriteMetaData> metas = new List<SpriteMetaData>();
 
@@ -83,11 +86,13 @@ public class AutoSpriteSlicer
 			meta.rect = new Rect(c * spriteSizeX, 1680+48*4, spriteSizeX, spriteSizeY);
 			meta.name = 0 + "-" + c;
 			metas.Add(meta);
-		}
+		}*/
 
 		importer.spritesheet = metas.ToArray();
 
 		AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+
+		
 	}
 
 	static List<Rect> SortRects(List<Rect> rects, float textureWidth)
