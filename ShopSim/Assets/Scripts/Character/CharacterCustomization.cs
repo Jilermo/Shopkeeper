@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class CharacterCustomization : MonoBehaviour
 {
+    public enum ClothingType
+    {
+        body,
+        eyes,
+        outfit,
+        hair,
+        accesory
+    }
     
     public SpriteRenderer body;
     public SpriteRenderer eyes;
@@ -54,7 +62,7 @@ public class CharacterCustomization : MonoBehaviour
                 bodySprites[i - 1] = (Sprite)sprites[i];
             }
             //bodySprites = (Sprite[])sprites;
-            body.sprite = bodySprites[3];
+            body.sprite = bodySprites[4];
         }
     }
 
@@ -68,7 +76,7 @@ public class CharacterCustomization : MonoBehaviour
             {
                 eyesSprites[i - 1] = (Sprite)sprites[i];
             }
-            eyes.sprite = eyesSprites[3];
+            eyes.sprite = eyesSprites[4];
         }
     }
 
@@ -82,7 +90,7 @@ public class CharacterCustomization : MonoBehaviour
             {
                 outfitSprites[i - 1] = (Sprite)sprites[i];
             }
-            outfit.sprite = outfitSprites[3];
+            outfit.sprite = outfitSprites[4];
         }
     }
 
@@ -96,7 +104,7 @@ public class CharacterCustomization : MonoBehaviour
             {
                 hairSprites[i - 1] = (Sprite)sprites[i];
             }
-            hair.sprite = hairSprites[3];
+            hair.sprite = hairSprites[4];
         }
     }
 
@@ -110,7 +118,7 @@ public class CharacterCustomization : MonoBehaviour
             {
                 accesorySprites[i - 1] = (Sprite)sprites[i];
             }
-            accesory.sprite = accesorySprites[3];
+            accesory.sprite = accesorySprites[4];
         }
     }
 

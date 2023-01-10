@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class FloorGrid
+public class FloorGrid
 {
     int width;
     int height;
@@ -13,9 +13,11 @@ public partial class FloorGrid
 
     Grid<FloorGridClass> grid;
 
+    PlayerController player;
 
-    public FloorGrid(int _width,int _height,float _size,Vector2 _originPosition,GameObject _linePefab,Transform _linesParentTransform)
+    public FloorGrid(int _width,int _height,float _size,Vector2 _originPosition,GameObject _linePefab,Transform _linesParentTransform, PlayerController _player)
     {
+        player = _player;
         width = _width;
         height = _height;
         size = _size;
@@ -215,6 +217,11 @@ public partial class FloorGrid
                 {
                     return false;
                 }
+                FloorGridClass playerGrid = player.getCurrentCell();
+                if (playerGrid.getX() == _cellPosition.x && playerGrid.getY()== _cellPosition.y)
+                {
+                    return false;
+                }
 
                 
                 //grid.GetGridObject()
@@ -223,27 +230,38 @@ public partial class FloorGrid
         return true;
     }
 
-    public bool setCellsWalkable(Vector2 _x, Vector2 _y,bool _walkable)
+    public bool setCellsWalkable(Vector2 _x, Vector2 _y,bool _walkable, InteractableObject _interactable)
     {
         if (!isWalwable(_x, _y))
         {
             return false;
         }
-        
-        float _step = size / 2;
-        int _stepsX = Mathf.CeilToInt(Mathf.Abs(_x.x - _x.y) / _step);
-        int _stepsY = Mathf.CeilToInt(Mathf.Abs(_y.x - _y.y) / _step);
+
+        float _stepX = size / 2;
+        float _stepY = size / 2;
+
+        int _stepsX = Mathf.CeilToInt(Mathf.Abs(_x.x - _x.y) / _stepX);
+        int _stepsY = Mathf.CeilToInt(Mathf.Abs(_y.x - _y.y) / _stepY);
+
+        if (_x.x > _x.y)
+        {
+            _stepX = -_stepX;
+        }
+        if (_y.x > _y.y)
+        {
+            _stepY = -_stepY;
+        }
 
         for (int c = 0; c < _stepsX; c++)
         {
-            for (int r = 0; r < _stepsX; r++)
+            for (int r = 0; r < _stepsY; r++)
             {
-                float _xToCheck = _x.x + size * c;
+                float _xToCheck = _x.x + _stepX * c;
                 if (_xToCheck > _x.y)
                 {
                     _xToCheck = _x.y;
                 }
-                float _yToCheck = _y.x + size * r;
+                float _yToCheck = _y.x + _stepY * r;
                 if (_yToCheck > _y.y)
                 {
                     _yToCheck = _y.y;
@@ -251,7 +269,50 @@ public partial class FloorGrid
                 Vector2 _worldPos = new Vector2(_xToCheck, _yToCheck);
                 Vector2Int _cellPosition = grid.GetXY(_worldPos);
 
-                grid.GetGridObject(_cellPosition.x, _cellPosition.y).setWalkable(_walkable);
+                grid.GetGridObject(_cellPosition.x, _cellPosition.y).setWalkable(_walkable, _interactable);
+                //grid.GetGridObject()
+            }
+        }
+
+        return true;
+    }
+
+    public bool setCellsNotWalkable(Vector2 _x, Vector2 _y)
+    {
+
+        float _stepX = size / 2;
+        float _stepY = size / 2;
+
+        int _stepsX = Mathf.CeilToInt(Mathf.Abs(_x.x - _x.y) / _stepX);
+        int _stepsY = Mathf.CeilToInt(Mathf.Abs(_y.x - _y.y) / _stepY);
+
+        if (_x.x > _x.y)
+        {
+            _stepX = -_stepX;
+        }
+        if (_y.x > _y.y)
+        {
+            _stepY = -_stepY;
+        }
+
+        for (int c = 0; c < _stepsX; c++)
+        {
+            for (int r = 0; r < _stepsY; r++)
+            {
+                float _xToCheck = _x.x + _stepX * c;
+                if (_xToCheck > _x.y)
+                {
+                    _xToCheck = _x.y;
+                }
+                float _yToCheck = _y.x + _stepY * r;
+                if (_yToCheck > _y.y)
+                {
+                    _yToCheck = _y.y;
+                }
+                Vector2 _worldPos = new Vector2(_xToCheck, _yToCheck);
+                Vector2Int _cellPosition = grid.GetXY(_worldPos);
+
+                grid.GetGridObject(_cellPosition.x, _cellPosition.y).setWalkable(true, null);
                 //grid.GetGridObject()
             }
         }

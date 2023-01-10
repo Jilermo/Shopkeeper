@@ -14,6 +14,8 @@ public class FloorGridClass
 
     public FloorGridClass cameFrom;
 
+    public InteractableObject interactible;
+
     //public FloorGridClass(int _x, int _y)
     public FloorGridClass(Grid<FloorGridClass> _grid, int _x, int _y)
     {
@@ -42,24 +44,41 @@ public class FloorGridClass
         return x + "," + y;
     }
 
-    public void setWalkable(bool _walkable)
+    public void setWalkable(bool _walkable,InteractableObject _interactable)
     {
         isWalkable = _walkable;
         if (_walkable)
         {
             grid.setLineRenderColor(x,y,Color.green);
             grid.setLineRenderLayerOrder(x, y, 1);
+            quitInteractableObject();
         }
         else
         {
             grid.setLineRenderColor(x, y, Color.red);
             grid.setLineRenderLayerOrder(x,y,2);
+            setInteractableObject(_interactable);
         }
     }
 
     public bool getWalkable()
     {
         return isWalkable;
+    }
+
+    public void setInteractableObject(InteractableObject _interactable)
+    {
+        interactible = _interactable;
+    }
+
+    public InteractableObject getInteractableObject()
+    {
+        return interactible;
+    }
+
+    public void quitInteractableObject()
+    {
+        interactible = null;
     }
 }
 

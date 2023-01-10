@@ -11,8 +11,11 @@ public class PlayerController : CharacterController
     List<FloorGridClass> currentPath;
     bool traversing=false;
 
+    public MainUIScript mainUIScript;
+
     bool controllingPlayer = false;
     // Start is called before the first frame update
+    bool waitForInput = false;
     void Start()
     {
         floorGrid = GameObject.Find("FloorGrid").GetComponent<TestFloorGrid>();
@@ -33,16 +36,7 @@ public class PlayerController : CharacterController
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (Input.GetMouseButtonDown(1))
-        {
-            Vector2 clickPosition = GetMouseWorldPosition();
-            Vector2Int floorGridXY = floorGrid.floorGrid.GetGrid().GetXY(clickPosition);
-            floorGrid.floorGrid.GetGrid().GetGridObject(floorGridXY.x, floorGridXY.y).setWalkable(!floorGrid.floorGrid.GetGrid().GetGridObject(floorGridXY.x, floorGridXY.y).getWalkable());
-            
-            //grid.SetGridObject(GetMouseWorldPosition(),true);
-        }
-        */
+       
 
         if (Input.GetMouseButtonDown(0) && GlobalVariables.controllingPlayer)
         {
@@ -59,7 +53,7 @@ public class PlayerController : CharacterController
 
         if (traversing)
         {
-            Debug.Log("target="+ currentPath[0].getX()+","+ currentPath[0].getY() + "current= " + getCurrentCell().getX() + "," + getCurrentCell().getY());
+            //Debug.Log("target="+ currentPath[0].getX()+","+ currentPath[0].getY() + "current= " + getCurrentCell().getX() + "," + getCurrentCell().getY());
             if (currentPath[0].getX() == getCurrentCell().getX() && currentPath[0].getY() == getCurrentCell().getY())
             {
                 traversing = false;
@@ -67,6 +61,38 @@ public class PlayerController : CharacterController
                 checkNextDirection();
             }
         }
+
+        if (Input.GetMouseButtonDown(1) && !GlobalVariables.controllingPlayer && !waitForInput)
+        {
+            waitForInput = true;
+            StartCoroutine(waitForInputI());
+            mainUIScript.closeAlMenus();
+            GlobalVariables.controllingPlayer = true;
+        }
+
+        //Open Menu's
+        if (Input.GetMouseButtonDown(1) && GlobalVariables.controllingPlayer && !waitForInput)
+       {
+            waitForInput = true;
+            StartCoroutine(waitForInputI());
+           GlobalVariables.controllingPlayer = false;
+           Vector2 clickPosition = GetMouseWorldPosition();
+           Vector2Int floorGridXY = floorGrid.floorGrid.GetGrid().GetXY(clickPosition);
+            if (floorGrid.floorGrid.checkifCellIsValid(floorGridXY.x, floorGridXY.y))
+            {
+                if (!floorGrid.floorGrid.GetGrid().GetGridObject(floorGridXY.x, floorGridXY.y).getWalkable())
+                {
+                    InteractableObject _interactable = floorGrid.floorGrid.GetGrid().GetGridObject(floorGridXY.x, floorGridXY.y).getInteractableObject();
+                    mainUIScript.openMenu(clickPosition.x,clickPosition.y,_interactable);
+                }
+            }
+
+            //grid.SetGridObject(GetMouseWorldPosition(),true);
+        }
+
+        
+       
+
 
     }
 
@@ -156,5 +182,11 @@ public class PlayerController : CharacterController
     {
         Vector2Int currentFloorCell = floorGrid.floorGrid.GetGrid().GetXY(GetCharacterPosition());
         return floorGrid.floorGrid.GetGrid().GetGridObject(currentFloorCell.x, currentFloorCell.y);
+    }
+
+    IEnumerator waitForInputI()
+    {
+        yield return new WaitForSeconds(0.2f);
+        waitForInput = false;
     }
 }

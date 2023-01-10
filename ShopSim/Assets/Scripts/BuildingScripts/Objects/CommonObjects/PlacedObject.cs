@@ -14,6 +14,8 @@ public class PlacedObject : MonoBehaviour
 
     bool placed = false;
 
+    InteractableObject interactable;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +49,7 @@ public class PlacedObject : MonoBehaviour
                 placed = true;
                 Vector3 _xmin = spriteRenderer.bounds.min;
                 Vector3 _xmax = spriteRenderer.bounds.max;
-                floorGrid.floorGrid.setCellsWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y), false);
+                floorGrid.floorGrid.setCellsWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y), false,interactable);
                 GlobalVariables.controllingPlayer = true;
             }
         }

@@ -14,15 +14,21 @@ public class ClothStand : MonoBehaviour
 
     bool placed = false;
 
+    InteractableObject interactable;
+    ClothStandCustomization clothStandCustomization;
+
     // Start is called before the first frame update
     void Start()
     {
+        clothStandCustomization = GetComponent<ClothStandCustomization>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         sprite = spriteRenderer.sprite;
 
         floorGrid = GameObject.Find("FloorGrid").GetComponent<TestFloorGrid>();
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
         GlobalVariables.controllingPlayer = false;
+
+        interactable = new ClothStandInteractable(clothStandCustomization,this);
     }
 
     // Update is called once per frame
@@ -48,7 +54,7 @@ public class ClothStand : MonoBehaviour
                 placed = true;
                 Vector3 _xmin = spriteRenderer.bounds.min;
                 Vector3 _xmax = spriteRenderer.bounds.max;
-                floorGrid.floorGrid.setCellsWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y), false);
+                floorGrid.floorGrid.setCellsWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y), false, interactable);
                 GlobalVariables.controllingPlayer = true;
             }
         }
@@ -66,4 +72,11 @@ public class ClothStand : MonoBehaviour
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
+    public void move()
+    {
+        Vector3 _xmin = spriteRenderer.bounds.min;
+        Vector3 _xmax = spriteRenderer.bounds.max;
+        floorGrid.floorGrid.setCellsNotWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y));
+        placed = false;
+    }
 }
