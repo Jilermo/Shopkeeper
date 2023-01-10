@@ -16,9 +16,12 @@ public class AICharacterController : CharacterController
 
     InteractableObject currentInteractable;
 
+    public GameObject thought;
+
     bool leaving = false;
     void Start()
     {
+        GetComponent<CharacterCustomization>().spawnRandomClothes();
         floorGrid = GameObject.Find("FloorGrid").GetComponent<TestFloorGrid>();
 
         if (UP == null)
@@ -61,7 +64,7 @@ public class AICharacterController : CharacterController
         {
             for (int i = 0; i < GlobalVariables.saveData.commonObjects.Count; i++)
             {
-                CommonObjectInteractable _commonObjectInteractable = (CommonObjectInteractable)floorGrid.floorGrid.GetGrid().GetGridObject(new Vector2(GlobalVariables.saveData.clothStands[i].x, GlobalVariables.saveData.clothStands[i].y)).interactible;
+                CommonObjectInteractable _commonObjectInteractable = (CommonObjectInteractable)floorGrid.floorGrid.GetGrid().GetGridObject(new Vector2(GlobalVariables.saveData.commonObjects[i].x, GlobalVariables.saveData.commonObjects[i].y)).interactible;
                 float daysMod = GlobalVariables.saveData.numberOfDays * .01f;
                 if (daysMod > 0.3f)
                 {
@@ -242,7 +245,9 @@ public class AICharacterController : CharacterController
     {
         yield return new WaitForSeconds(2f);
         checkIfBuyOrPraise();
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
+        thought.SetActive(false);
+        yield return new WaitForSeconds(2f);
         if (!leaving)
         {
             getNextDestination();
@@ -267,6 +272,7 @@ public class AICharacterController : CharacterController
             if ((_value>Random.value))
             {
                 buyClothes(clothStandInteractable);
+                thought.SetActive(true);
             }
             clothStands.RemoveAt(0);
         }
@@ -281,7 +287,8 @@ public class AICharacterController : CharacterController
             float _value = (GlobalVariables.saveData.getNumberOfPoints() / 100) + (_commonObjectInteractable.getPlacedObject().categoryIndex * 0.02f) - daysMod;
             if ((_value>Random.value))
             {
-                GlobalVariables.saveData.setNumberOfPoints(GlobalVariables.saveData.getNumberOfPoints() + 2);
+                GlobalVariables.saveData.setNumberOfPoints(GlobalVariables.saveData.getNumberOfPoints() + 4);
+                thought.SetActive(true);
             }
             commonObjects.RemoveAt(0);
         }

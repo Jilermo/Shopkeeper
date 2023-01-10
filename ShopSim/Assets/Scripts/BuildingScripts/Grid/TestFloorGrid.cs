@@ -15,6 +15,8 @@ public class TestFloorGrid : MonoBehaviour
     Grid<FloorGridClass> grid;
 
     public PlayerController player;
+
+    public GameObject lineGridContainer;
     void Start()
     {
         //grid = new Grid<FloorGridClass>(width, height, size, originPosition, linePrefab, linesParentTransform, (x, y) => new FloorGridClass());
@@ -31,5 +33,8 @@ public class TestFloorGrid : MonoBehaviour
         return  floorGrid.FindPath(startNode.x, startNode.y, endNode.x, endNode.y); ;
     }
 
-    
+    public void setGridVisibility(bool _visibility)
+    {
+        lineGridContainer.SetActive(_visibility);
+    }
 }

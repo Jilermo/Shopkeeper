@@ -35,7 +35,7 @@ public class ClothStand : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
         GlobalVariables.controllingPlayer = false;
         GlobalVariables.placingObject = true;
-
+        floorGrid.setGridVisibility(true);
         interactable = new ClothStandInteractable(clothStandCustomization,this);
     }
 
@@ -66,6 +66,7 @@ public class ClothStand : MonoBehaviour
                 GlobalVariables.controllingPlayer = true;
                 GlobalVariables.placingObject = false;
                 spriteRenderer.sprite = sprites[ClothStandIndex];
+                floorGrid.setGridVisibility(false);
                 saveClothStand();
             }
         }
@@ -110,6 +111,7 @@ public class ClothStand : MonoBehaviour
         Vector3 _xmax = spriteRenderer.bounds.max;
         floorGrid.floorGrid.setCellsNotWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y));
         placed = false;
+        floorGrid.setGridVisibility(true);
         quitClothStand();
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class GlobalVariables
 {
+    [System.Serializable]
     public class ClothStandSave
     {
         public float x;
@@ -27,13 +28,14 @@ public static class GlobalVariables
         }
     }
 
+    [System.Serializable]
     public class PlacedCommonObjects
     {
-        float x;
-        float y;
+        public float x;
+        public float y;
 
-        int category;
-        int index;
+        public int category;
+        public int index;
         
         public PlacedCommonObjects(float _x, float _y, int _category, int _index)
         {
@@ -45,6 +47,7 @@ public static class GlobalVariables
         }
     }
 
+    [System.Serializable]
     public class SaveData
     {
         public int numberOfDays;

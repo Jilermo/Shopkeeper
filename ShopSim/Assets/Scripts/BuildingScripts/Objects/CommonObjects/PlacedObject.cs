@@ -30,7 +30,7 @@ public class PlacedObject : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
         GlobalVariables.controllingPlayer = false;
         GlobalVariables.placingObject = true;
-
+        floorGrid.setGridVisibility(true);
         interactable = new CommonObjectInteractable(this);
     }
 
@@ -60,7 +60,7 @@ public class PlacedObject : MonoBehaviour
                 floorGrid.floorGrid.setCellsWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y), false, interactable);
                 GlobalVariables.controllingPlayer = true;
                 GlobalVariables.placingObject = false;
-
+                floorGrid.setGridVisibility(false);
                 saveClothStand();
             }
         }
@@ -105,6 +105,7 @@ public class PlacedObject : MonoBehaviour
         Vector3 _xmax = spriteRenderer.bounds.max;
         floorGrid.floorGrid.setCellsNotWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y));
         placed = false;
+        floorGrid.setGridVisibility(true);
         quitClothStand();
     }
 

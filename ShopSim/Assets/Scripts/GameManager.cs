@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,8 +14,14 @@ public class GameManager : MonoBehaviour
 
     public GameObject startButton;
 
+    public GameObject AICharacter;
+    public Transform npcContainer;
+
     int coinsValue = 0;
     int pointsValue = 0;
+
+    float startTime;
+    float lastSpawn;
     private void Awake()
     {
         GlobalVariables.saveData = new GlobalVariables.SaveData();
@@ -37,13 +44,37 @@ public class GameManager : MonoBehaviour
             pointstxt.text = pointsValue.ToString();
         }
 
+        if (dayPlaying)
+        {
+            if (Time.time-startTime>120f)
+            {
+                dayPlaying = false;
+                startButton.SetActive(true);
+                GlobalVariables.placingObject = false;
+            }
+            timetxt.text = (120 - (Time.time - startTime)).ToString();
 
+            if (Time.time-lastSpawn>20f)
+            {
+                lastSpawn = Time.time;
+                spawnNPC();
+            }
+        }
     }
 
     public void startDay()
     {
         startButton.SetActive(false);
         dayPlaying = true;
+        startTime = Time.time;
+        GlobalVariables.placingObject = true;
+        lastSpawn = Time.time;
+        spawnNPC();
+    }
+
+    public void spawnNPC()
+    {
+        Instantiate(AICharacter,npcContainer);
     }
 
     public static void changedCoins(int _coins)
@@ -56,5 +87,11 @@ public class GameManager : MonoBehaviour
       
     }
 
-    
+    public void saveData()
+    {
+        string _path = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveData.json";
+
+        string json = JsonUtility.ToJson(GlobalVariables.saveData);
+        Debug.Log(json);
+    }
 }

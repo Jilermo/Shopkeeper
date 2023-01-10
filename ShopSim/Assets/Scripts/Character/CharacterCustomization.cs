@@ -19,11 +19,6 @@ public class CharacterCustomization : MonoBehaviour
     public SpriteRenderer hair;
     public SpriteRenderer accesory;
 
-    int numberOfBodies;
-    int numberOfEyes;
-    int numberOfOutfits;
-    int numberOfHairs;
-    int numberOfAccesories;
 
     Sprite[] bodySprites=new Sprite[28];
     Sprite[] eyesSprites = new Sprite[28];
@@ -33,11 +28,7 @@ public class CharacterCustomization : MonoBehaviour
 
     private void Awake()
     {
-        numberOfBodies = GlobalVariables.numberOfBodies;
-        numberOfEyes = GlobalVariables.numberOfEyes;
-        numberOfOutfits = GlobalVariables.numberOfOutfits;
-        numberOfHairs = GlobalVariables.numberOfHairs;
-        numberOfAccesories = GlobalVariables.numberOfAccesories;
+
     }
 
     private void Start()
@@ -52,7 +43,7 @@ public class CharacterCustomization : MonoBehaviour
 
     public void changeBody(int _number)
     {
-        if (_number<numberOfBodies && _number >=0)
+        if (_number< GlobalVariables.numberOfBodies && _number >=0)
         {
             Object[] sprites;
             //sprites = Resources.LoadAll("0");
@@ -69,7 +60,7 @@ public class CharacterCustomization : MonoBehaviour
 
     public void changeEyes(int _number)
     {
-        if (_number < numberOfEyes && _number >= 0)
+        if (_number < GlobalVariables.numberOfEyes && _number >= 0)
         {
             Object[] sprites;
             sprites = Resources.LoadAll("Eyes/" + _number);
@@ -84,7 +75,7 @@ public class CharacterCustomization : MonoBehaviour
 
     public void changeOutfit(int _number)
     {
-        if (_number < numberOfOutfits && _number >= 0)
+        if (_number < GlobalVariables.numberOfOutfits && _number >= 0)
         {
             Object[] sprites;
             sprites = Resources.LoadAll("Outfits/" + _number);
@@ -99,7 +90,7 @@ public class CharacterCustomization : MonoBehaviour
 
     public void changeHair(int _number)
     {
-        if (_number < numberOfHairs && _number >= 0)
+        if (_number < GlobalVariables.numberOfHairs && _number >= 0)
         {
             Object[] sprites;
             sprites = Resources.LoadAll("HairStyles/" + _number);
@@ -114,7 +105,7 @@ public class CharacterCustomization : MonoBehaviour
 
     public void changeAccesory(int _number)
     {
-        if (_number < numberOfAccesories && _number >= 0)
+        if (_number < GlobalVariables.numberOfAccesories && _number >= 0)
         {
             Object[] sprites;
             sprites = Resources.LoadAll("Accesories/" + _number);
@@ -160,4 +151,12 @@ public class CharacterCustomization : MonoBehaviour
         }
     }
 
+    public void spawnRandomClothes()
+    {
+        changeBody(Random.Range(0, GlobalVariables.numberOfBodies));
+        changeEyes(Random.Range(0, GlobalVariables.numberOfEyes));
+        changeOutfit(Random.Range(0, GlobalVariables.numberOfOutfits));
+        changeHair(Random.Range(0, GlobalVariables.numberOfHairs));
+        changeAccesory(Random.Range(0, GlobalVariables.numberOfAccesories));
+    }
 }
