@@ -11,6 +11,7 @@ public class ClothStandInteractable : InteractableObject
     {
         customization = _customization;
         stand = _stand;
+        setInteractableObjectType(InteractableObjectType.ClothStand);
     }
 
     public ClothStandCustomization GetClothStandCustomization()

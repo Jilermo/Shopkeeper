@@ -9,11 +9,6 @@ public class ClothStandCustomization : MonoBehaviour
     public SpriteRenderer hair;
     public SpriteRenderer accesory;
 
-    int numberOfBodies;
-    int numberOfEyes;
-    int numberOfOutfits;
-    int numberOfHairs;
-    int numberOfAccesories;
 
     Sprite bodySprites;
     Sprite eyesSprites;
@@ -21,17 +16,16 @@ public class ClothStandCustomization : MonoBehaviour
     Sprite hairSprites;
     Sprite accesorySprites;
 
-    private void Awake()
-    {
-        numberOfBodies = GlobalVariables.numberOfBodies;
-        numberOfEyes = GlobalVariables.numberOfEyes;
-        numberOfOutfits = GlobalVariables.numberOfOutfits;
-        numberOfHairs = GlobalVariables.numberOfHairs;
-        numberOfAccesories = GlobalVariables.numberOfAccesories;
-    }
+    public int eyesIndex;
+    public int outfitIndex;
+    public int hairIndex;
+    public int accesoryIndex;
+
+    ClothStand clothStand;
 
     private void Start()
     {
+        clothStand = GetComponent<ClothStand>();
         changeEyes(0);
         changeOutfit(0);
         changeHair(0);
@@ -61,42 +55,50 @@ public class ClothStandCustomization : MonoBehaviour
 
     public void changeEyes(int _number)
     {
-        if (_number < numberOfEyes && _number >= 0)
+        if (_number < GlobalVariables.numberOfEyes && _number >= 0)
         {
             Object[] sprites;
             sprites = Resources.LoadAll("Eyes/" + _number);
             eyes.sprite = (Sprite)sprites[4];
+            eyesIndex = _number;
         }
+        clothStand.saveClothStand();
     }
 
     public void changeOutfit(int _number)
     {
-        if (_number < numberOfOutfits && _number >= 0)
+        if (_number < GlobalVariables.numberOfOutfits && _number >= 0)
         {
             Object[] sprites;
             sprites = Resources.LoadAll("Outfits/" + _number);
             outfit.sprite = (Sprite)sprites[4];
+            outfitIndex = _number;
         }
+        clothStand.saveClothStand();
     }
 
     public void changeHair(int _number)
     {
-        if (_number < numberOfHairs && _number >= 0)
+        if (_number < GlobalVariables.numberOfHairs && _number >= 0)
         {
             Object[] sprites;
             sprites = Resources.LoadAll("HairStyles/" + _number);
             hair.sprite = (Sprite)sprites[4];
+            hairIndex = _number;
         }
+        clothStand.saveClothStand();
     }
 
     public void changeAccesory(int _number)
     {
-        if (_number < numberOfAccesories && _number >= 0)
+        if (_number < GlobalVariables.numberOfAccesories && _number >= 0)
         {
             Object[] sprites;
             sprites = Resources.LoadAll("Accesories/" + _number);
             accesory.sprite = (Sprite)sprites[4];
+            accesoryIndex = _number;
         }
+        clothStand.saveClothStand();
     }
 
 }

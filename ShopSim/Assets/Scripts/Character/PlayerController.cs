@@ -16,8 +16,11 @@ public class PlayerController : CharacterController
     bool controllingPlayer = false;
     // Start is called before the first frame update
     bool waitForInput = false;
+
+    UserMenuInteractable userMenuInteractable;
     void Start()
     {
+        userMenuInteractable = new UserMenuInteractable(GetComponent<CharacterCustomization>());
         floorGrid = GameObject.Find("FloorGrid").GetComponent<TestFloorGrid>();
 
         if (UP == null)
@@ -71,20 +74,25 @@ public class PlayerController : CharacterController
         }
 
         //Open Menu's
-        if (Input.GetMouseButtonDown(1) && GlobalVariables.controllingPlayer && !waitForInput)
+        if (Input.GetMouseButtonDown(1) && GlobalVariables.controllingPlayer && !waitForInput && !GlobalVariables.placingObject)
        {
-            waitForInput = true;
-            StartCoroutine(waitForInputI());
+           waitForInput = true;
+           StartCoroutine(waitForInputI());
            GlobalVariables.controllingPlayer = false;
            Vector2 clickPosition = GetMouseWorldPosition();
            Vector2Int floorGridXY = floorGrid.floorGrid.GetGrid().GetXY(clickPosition);
             if (floorGrid.floorGrid.checkifCellIsValid(floorGridXY.x, floorGridXY.y))
             {
-                if (!floorGrid.floorGrid.GetGrid().GetGridObject(floorGridXY.x, floorGridXY.y).getWalkable())
+                InteractableObject _interactable = floorGrid.floorGrid.GetGrid().GetGridObject(floorGridXY.x, floorGridXY.y).getInteractableObject();
+                if (_interactable == null)
                 {
-                    InteractableObject _interactable = floorGrid.floorGrid.GetGrid().GetGridObject(floorGridXY.x, floorGridXY.y).getInteractableObject();
-                    mainUIScript.openMenu(clickPosition.x,clickPosition.y,_interactable);
+                    mainUIScript.openMenu(clickPosition.x, clickPosition.y, userMenuInteractable);
                 }
+                else
+                {
+                    mainUIScript.openMenu(clickPosition.x, clickPosition.y, _interactable);
+                }
+                
             }
 
             //grid.SetGridObject(GetMouseWorldPosition(),true);

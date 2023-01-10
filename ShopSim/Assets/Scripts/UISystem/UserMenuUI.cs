@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DresserUI : UIMenuClass
+public class UserMenuUI : UIMenuClass
 {
     float x;
     float y;
-    ClothStandInteractable clothStandInteractable;
+    UserMenuInteractable userMenuInteractable;
+
     MainUIScript mainUIScript;
-    public void OpenMenu(float _x, float _y,ClothStandInteractable _standInteractable,MainUIScript _mainUIScript)
+    public void OpenMenu(float _x, float _y, UserMenuInteractable _userMenuInteractable,MainUIScript _mainUIScript)
     {
         mainUIScript = _mainUIScript;
         x = _x;
         y = _y;
-        clothStandInteractable = _standInteractable;
+        userMenuInteractable = _userMenuInteractable;
         gameObject.SetActive(true);
         if (_x > 4.5f)
         {
@@ -25,15 +26,15 @@ public class DresserUI : UIMenuClass
         }
     }
 
-    public void OpenSlectClothesMenu()
+    public void OpenSelectClothsMenu()
     {
-        mainUIScript.selectClothesMenu.openMenu(x, y, clothStandInteractable, mainUIScript);
+        mainUIScript.selectClothesMenu.openMenu(x, y, userMenuInteractable,mainUIScript);
         closeAllMenus();
     }
 
-    public void move()
+    public void OpenClothsStandMenu()
     {
-        clothStandInteractable.getClothStand().move();
+        mainUIScript.selectClothStandMenu.openMenu(x, y, mainUIScript);
         closeAllMenus();
     }
 

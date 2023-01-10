@@ -14,8 +14,15 @@ public class SelectClothesMenu : UIMenuClass
 
     public List<GameObject> clothesButtons;
 
-    public void openMenu(float _x, float _y, InteractableObject _interactable)
+    MainUIScript mainUIScript;
+
+    float x;
+    float y;
+    public void openMenu(float _x, float _y, InteractableObject _interactable, MainUIScript _mainUIScript)
     {
+        x = _x;
+        y = _y;
+        mainUIScript = _mainUIScript;
         gameObject.SetActive(true);
         if (_x>4.5f)
         {
@@ -34,6 +41,10 @@ public class SelectClothesMenu : UIMenuClass
                 fillMenu(CharacterCustomization.ClothingType.outfit);
                 break;
             case InteractableObject.InteractableObjectType.CommonObject:
+                
+                break;
+            case InteractableObject.InteractableObjectType.userMenu:
+                fillMenu(CharacterCustomization.ClothingType.body);
                 break;
             default:
                 break;
@@ -68,6 +79,10 @@ public class SelectClothesMenu : UIMenuClass
                 break;
             case InteractableObject.InteractableObjectType.CommonObject:
                 break;
+            case InteractableObject.InteractableObjectType.userMenu:
+                UserMenuInteractable _userMenuInteractable = (UserMenuInteractable)interactableObject;
+                _userMenuInteractable.GetCharacterCustomization().changeClotheType(_index, _clothingType);
+                break;
             default:
                 break;
         }
@@ -97,6 +112,7 @@ public class SelectClothesMenu : UIMenuClass
                     ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                     _clothButtonScript.clothIndex = i;
                     _clothButtonScript.clothesMenu = this;
+                    _clothButtonScript.clothingType = _clothingType;
                     clothesButtons.Add(clothButton);
                 }
                 break;
@@ -116,6 +132,7 @@ public class SelectClothesMenu : UIMenuClass
                     ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                     _clothButtonScript.clothIndex = i;
                     _clothButtonScript.clothesMenu = this;
+                    _clothButtonScript.clothingType = _clothingType;
                     clothesButtons.Add(clothButton);
                 }
                 break;
@@ -135,6 +152,7 @@ public class SelectClothesMenu : UIMenuClass
                     ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                     _clothButtonScript.clothIndex = i;
                     _clothButtonScript.clothesMenu = this;
+                    _clothButtonScript.clothingType = _clothingType;
                     clothesButtons.Add(clothButton);
                 }
 
@@ -155,6 +173,7 @@ public class SelectClothesMenu : UIMenuClass
                     ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                     _clothButtonScript.clothIndex = i;
                     _clothButtonScript.clothesMenu = this;
+                    _clothButtonScript.clothingType = _clothingType;
                     clothesButtons.Add(clothButton);
                 }
                 break;
@@ -174,6 +193,7 @@ public class SelectClothesMenu : UIMenuClass
                     ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                     _clothButtonScript.clothIndex = i;
                     _clothButtonScript.clothesMenu = this;
+                    _clothButtonScript.clothingType = _clothingType;
                     clothesButtons.Add(clothButton);
                 }
                 break;
@@ -207,6 +227,7 @@ public class SelectClothesMenu : UIMenuClass
                         ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                         _clothButtonScript.clothIndex = i;
                         _clothButtonScript.clothesMenu = this;
+                        _clothButtonScript.clothingType = currentClothingType;
                         clothesButtons.Add(clothButton);
                     }
                 }
@@ -230,6 +251,7 @@ public class SelectClothesMenu : UIMenuClass
                         ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                         _clothButtonScript.clothIndex = i;
                         _clothButtonScript.clothesMenu = this;
+                        _clothButtonScript.clothingType = currentClothingType;
                         clothesButtons.Add(clothButton);
                     }
                 }
@@ -255,6 +277,7 @@ public class SelectClothesMenu : UIMenuClass
                         ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                         _clothButtonScript.clothIndex = i;
                         _clothButtonScript.clothesMenu = this;
+                        _clothButtonScript.clothingType = currentClothingType;
                         clothesButtons.Add(clothButton);
                     }
                 }
@@ -279,6 +302,7 @@ public class SelectClothesMenu : UIMenuClass
                         ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                         _clothButtonScript.clothIndex = i;
                         _clothButtonScript.clothesMenu = this;
+                        _clothButtonScript.clothingType = currentClothingType;
                         clothesButtons.Add(clothButton);
                     }
                 }
@@ -304,6 +328,7 @@ public class SelectClothesMenu : UIMenuClass
                         ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                         _clothButtonScript.clothIndex = i;
                         _clothButtonScript.clothesMenu = this;
+                        _clothButtonScript.clothingType = currentClothingType;
                         clothesButtons.Add(clothButton);
                     }
                 }
@@ -337,6 +362,7 @@ public class SelectClothesMenu : UIMenuClass
                         ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                         _clothButtonScript.clothIndex = i;
                         _clothButtonScript.clothesMenu = this;
+                        _clothButtonScript.clothingType = currentClothingType;
                         clothesButtons.Add(clothButton);
                     }
                 }
@@ -361,6 +387,7 @@ public class SelectClothesMenu : UIMenuClass
                         ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                         _clothButtonScript.clothIndex = i;
                         _clothButtonScript.clothesMenu = this;
+                        _clothButtonScript.clothingType = currentClothingType;
                         clothesButtons.Add(clothButton);
                     }
                 }
@@ -384,6 +411,7 @@ public class SelectClothesMenu : UIMenuClass
                         ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                         _clothButtonScript.clothIndex = i;
                         _clothButtonScript.clothesMenu = this;
+                        _clothButtonScript.clothingType = currentClothingType;
                         clothesButtons.Add(clothButton);
                     }
                 }
@@ -408,6 +436,7 @@ public class SelectClothesMenu : UIMenuClass
                         ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                         _clothButtonScript.clothIndex = i;
                         _clothButtonScript.clothesMenu = this;
+                        _clothButtonScript.clothingType = currentClothingType;
                         clothesButtons.Add(clothButton);
                     }
                 }
@@ -432,6 +461,7 @@ public class SelectClothesMenu : UIMenuClass
                         ClothButtonScript _clothButtonScript = clothButton.GetComponent<ClothButtonScript>();
                         _clothButtonScript.clothIndex = i;
                         _clothButtonScript.clothesMenu = this;
+                        _clothButtonScript.clothingType = currentClothingType;
                         clothesButtons.Add(clothButton);
                     }
                 }
@@ -474,6 +504,33 @@ public class SelectClothesMenu : UIMenuClass
                 break;
             case InteractableObject.InteractableObjectType.CommonObject:
                 break;
+            case InteractableObject.InteractableObjectType.userMenu:
+                switch (currentClothingType)
+                {
+                    case CharacterCustomization.ClothingType.body:
+                        currentClothingType = CharacterCustomization.ClothingType.eyes;
+                        fillMenu(CharacterCustomization.ClothingType.eyes);
+                        break;
+                    case CharacterCustomization.ClothingType.eyes:
+                        currentClothingType = CharacterCustomization.ClothingType.outfit;
+                        fillMenu(CharacterCustomization.ClothingType.outfit);
+                        break;
+                    case CharacterCustomization.ClothingType.outfit:
+                        currentClothingType = CharacterCustomization.ClothingType.hair;
+                        fillMenu(CharacterCustomization.ClothingType.hair);
+                        break;
+                    case CharacterCustomization.ClothingType.hair:
+                        currentClothingType = CharacterCustomization.ClothingType.accesory;
+                        fillMenu(CharacterCustomization.ClothingType.accesory);
+                        break;
+                    case CharacterCustomization.ClothingType.accesory:
+                        currentClothingType = CharacterCustomization.ClothingType.body;
+                        fillMenu(CharacterCustomization.ClothingType.body);
+                        break;
+                    default:
+                        break;
+                }
+                break;
             default:
                 break;
         }
@@ -511,6 +568,33 @@ public class SelectClothesMenu : UIMenuClass
                 }
                 break;
             case InteractableObject.InteractableObjectType.CommonObject:
+                break;
+            case InteractableObject.InteractableObjectType.userMenu:
+                switch (currentClothingType)
+                {
+                    case CharacterCustomization.ClothingType.body:
+                        currentClothingType = CharacterCustomization.ClothingType.accesory;
+                        fillMenu(CharacterCustomization.ClothingType.accesory);
+                        break;
+                    case CharacterCustomization.ClothingType.eyes:
+                        currentClothingType = CharacterCustomization.ClothingType.body;
+                        fillMenu(CharacterCustomization.ClothingType.body);
+                        break;
+                    case CharacterCustomization.ClothingType.outfit:
+                        currentClothingType = CharacterCustomization.ClothingType.eyes;
+                        fillMenu(CharacterCustomization.ClothingType.eyes);
+                        break;
+                    case CharacterCustomization.ClothingType.hair:
+                        currentClothingType = CharacterCustomization.ClothingType.outfit;
+                        fillMenu(CharacterCustomization.ClothingType.outfit);
+                        break;
+                    case CharacterCustomization.ClothingType.accesory:
+                        currentClothingType = CharacterCustomization.ClothingType.hair;
+                        fillMenu(CharacterCustomization.ClothingType.hair);
+                        break;
+                    default:
+                        break;
+                }
                 break;
             default:
                 break;

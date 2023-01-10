@@ -131,4 +131,28 @@ public class CharacterCustomization : MonoBehaviour
         accesory.sprite = accesorySprites[frame];
     }
 
+    public void changeClotheType(int _index, CharacterCustomization.ClothingType _clothingType)
+    {
+        switch (_clothingType)
+        {
+            case CharacterCustomization.ClothingType.body:
+                changeBody(_index);
+                break;
+            case CharacterCustomization.ClothingType.eyes:
+                changeEyes(_index);
+                break;
+            case CharacterCustomization.ClothingType.outfit:
+                changeOutfit(_index);
+                break;
+            case CharacterCustomization.ClothingType.hair:
+                changeHair(_index);
+                break;
+            case CharacterCustomization.ClothingType.accesory:
+                changeAccesory(_index);
+                break;
+            default:
+                break;
+        }
+    }
+
 }

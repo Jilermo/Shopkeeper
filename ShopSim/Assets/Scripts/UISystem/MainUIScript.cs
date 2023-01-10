@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class MainUIScript : UIMenuClass
 {
+    public Transform placedObjectsParent;
+
     public DresserUI dresserUI;
     public SelectClothesMenu selectClothesMenu;
+    public UserMenuUI userMenuUI;
+    public SelectClothStandMenu selectClothStandMenu;
     List <UIMenuClass> allMenus;
 
     private void Start()
@@ -13,6 +17,8 @@ public class MainUIScript : UIMenuClass
         allMenus = new List<UIMenuClass>();
         allMenus.Add(dresserUI);
         allMenus.Add(selectClothesMenu);
+        allMenus.Add(userMenuUI);
+        allMenus.Add(selectClothStandMenu);
     }
 
     public void openMenu(float _x, float _y,InteractableObject _interactable)
@@ -20,9 +26,12 @@ public class MainUIScript : UIMenuClass
         switch (_interactable.getInteractableObjectType())
         {
             case InteractableObject.InteractableObjectType.ClothStand:
-                dresserUI.OpenMenu(_x,_y,(ClothStandInteractable)_interactable);
+                dresserUI.OpenMenu(_x,_y,(ClothStandInteractable)_interactable,this);
                 break;
             case InteractableObject.InteractableObjectType.CommonObject:
+                break;
+            case InteractableObject.InteractableObjectType.userMenu:
+                userMenuUI.OpenMenu(_x, _y, (UserMenuInteractable)_interactable,this);
                 break;
             default:
                 break;
