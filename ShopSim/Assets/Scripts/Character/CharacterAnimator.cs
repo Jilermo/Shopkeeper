@@ -29,15 +29,12 @@ public class CharacterAnimator : MonoBehaviour
     
     Vector3 walkingDirection = Vector3.zero;
 
-    Rigidbody2D cRigidbody;
-
    //Speed for moving
     float speed;
     private void Awake()
     {
         animationsDuration = GlobalVariables.characterAnimationDuration;
         speed = GlobalVariables.charactersSpeed;
-        cRigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
@@ -102,8 +99,6 @@ public class CharacterAnimator : MonoBehaviour
 
     public void resetAnimationValues()
     {
-        cRigidbody.velocity = Vector3.zero;
-        cRigidbody.angularVelocity = 0f;
         currentFrame = animationStartFrame;
         elapsedTime = Time.time;
     }
@@ -133,8 +128,7 @@ public class CharacterAnimator : MonoBehaviour
             default:
                 break;
         }
-        cRigidbody.velocity = Vector3.zero;
-        cRigidbody.angularVelocity = 0f;
+
         walkingDirection = Vector3.zero;
     }
 
@@ -143,23 +137,6 @@ public class CharacterAnimator : MonoBehaviour
     {
         if (Time.time-elapsedTime>animationsDuration)
         {
-           /*
-            cRigidbody.AddForce(walkingDirection * speed,ForceMode2D.Impulse);
-            if (cRigidbody.velocity.x>4f)
-            {
-                cRigidbody.velocity = new Vector2(4f,0f);
-            }else if (cRigidbody.velocity.x < -4f)
-            {
-                cRigidbody.velocity = new Vector2(-4f, 0f);
-            }
-            if (cRigidbody.velocity.y > 4f)
-            {
-                cRigidbody.velocity = new Vector2(0f, 4f);
-            }else if (cRigidbody.velocity.y < -4f)
-            {
-                cRigidbody.velocity = new Vector2(0f, -4f);
-            }
-            */
             transform.position += walkingDirection*speed;
             currentFrame += 1;
             if (currentFrame>animationEndFrame)

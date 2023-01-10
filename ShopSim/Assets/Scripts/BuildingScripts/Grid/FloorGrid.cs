@@ -30,14 +30,40 @@ public partial class FloorGrid
         return grid;
     }
 
+    public bool checkifCellIsValid(int _x, int _y)
+    {
+        if (_x >= 0 && _x < width && _y >= 0 && _y < height)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     public List<FloorGridClass> FindPath(int startX,int startY, int endX, int endY)
     {
+        if (!checkifCellIsValid(startX, startY))
+        {
+            return null;
+        }
+        if (!checkifCellIsValid(endX, endY))
+        {
+            return null;
+        }
+        
+
         List<FloorGridClass> openList= new List<FloorGridClass>();
         List<FloorGridClass> closeList = new List<FloorGridClass>();
 
         FloorGridClass startNode = grid.GetGridObject(startX,startY);
         FloorGridClass endNode = grid.GetGridObject(endX, endY);
+
+        if (!endNode.getWalkable())
+        {
+            return null;
+        }
 
         for (int c = 0; c < grid.getWidth(); c++)
         {
@@ -69,6 +95,11 @@ public partial class FloorGrid
             foreach (var floorGrid in GetNeighboursList(currentFloorGrid))
             {
                 if (closeList.Contains(floorGrid)) continue;
+                if (!floorGrid.getWalkable())
+                {
+                    closeList.Add(floorGrid);
+                    continue;
+                }
 
                 int tentativeGcost = currentFloorGrid.gCost + CalculateDistance(new Vector2Int(currentFloorGrid.getX(), currentFloorGrid.getY()), new Vector2Int(floorGrid.getX(), floorGrid.getY()));
                 if (tentativeGcost<floorGrid.gCost)
@@ -142,5 +173,89 @@ public partial class FloorGrid
             }
         }
         return lowestFCostNode;
+    }
+
+    public bool isWalwable(Vector2 _x, Vector2 _y)
+    {
+        float _stepX = size / 2;
+        float _stepY = size / 2;
+        int _stepsX = Mathf.CeilToInt(Mathf.Abs(_x.x-_x.y)/_stepX);
+        int _stepsY = Mathf.CeilToInt(Mathf.Abs(_y.x - _y.y) / _stepY);
+
+        if (_x.x > _x.y)
+        {
+            _stepX = -_stepX;
+        }
+        if (_y.x > _y.y)
+        {
+            _stepY = -_stepY;
+        }
+
+        for (int c = 0; c < _stepsX; c++)
+        {
+            for (int r = 0; r < _stepsX; r++)
+            {
+                float _xToCheck = _x.x + _stepX * c;
+                if (_xToCheck>_x.y)
+                {
+                    _xToCheck = _x.y;
+                }
+                float _yToCheck = _y.x + _stepY * r;
+                if (_yToCheck > _y.y)
+                {
+                    _yToCheck = _y.y;
+                }
+                Vector2 _worldPos = new Vector2(_xToCheck, _yToCheck);
+                Vector2Int _cellPosition = grid.GetXY(_worldPos);
+                if (!checkifCellIsValid(_cellPosition.x, _cellPosition.y))
+                {
+                    return false;
+                }
+                if (!grid.GetGridObject(_cellPosition.x, _cellPosition.y).getWalkable())
+                {
+                    return false;
+                }
+
+                
+                //grid.GetGridObject()
+            }
+        }
+        return true;
+    }
+
+    public bool setCellsWalkable(Vector2 _x, Vector2 _y,bool _walkable)
+    {
+        if (!isWalwable(_x, _y))
+        {
+            return false;
+        }
+        
+        float _step = size / 2;
+        int _stepsX = Mathf.CeilToInt(Mathf.Abs(_x.x - _x.y) / _step);
+        int _stepsY = Mathf.CeilToInt(Mathf.Abs(_y.x - _y.y) / _step);
+
+        for (int c = 0; c < _stepsX; c++)
+        {
+            for (int r = 0; r < _stepsX; r++)
+            {
+                float _xToCheck = _x.x + size * c;
+                if (_xToCheck > _x.y)
+                {
+                    _xToCheck = _x.y;
+                }
+                float _yToCheck = _y.x + size * r;
+                if (_yToCheck > _y.y)
+                {
+                    _yToCheck = _y.y;
+                }
+                Vector2 _worldPos = new Vector2(_xToCheck, _yToCheck);
+                Vector2Int _cellPosition = grid.GetXY(_worldPos);
+
+                grid.GetGridObject(_cellPosition.x, _cellPosition.y).setWalkable(_walkable);
+                //grid.GetGridObject()
+            }
+        }
+
+        return true;
     }
 }

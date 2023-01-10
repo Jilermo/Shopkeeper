@@ -12,5 +12,6 @@ public static class GlobalVariables
     public static readonly int numberOfAccesories =84;
     public static readonly float charactersSpeed = 0.2f;
     public static readonly float characterAnimationDuration = 0.13f;
+    public static bool controllingPlayer;
 
 }

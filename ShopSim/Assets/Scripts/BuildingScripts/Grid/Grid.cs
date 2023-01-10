@@ -9,6 +9,7 @@ public class Grid <TGridObjects>
     float cellSize;
     Vector2 originPosition;
     TGridObjects[,] gridarray;
+    LineRenderer[,] lineArray;
     GameObject linePrefab;
     Transform linesParentTransform;
 
@@ -22,6 +23,7 @@ public class Grid <TGridObjects>
         linesParentTransform = _linePrefabParent;
 
         gridarray = new TGridObjects[width,height];
+        lineArray = new LineRenderer[width, height];
 
         for (int c = 0; c < width; c++)
         {
@@ -58,6 +60,7 @@ public class Grid <TGridObjects>
         lineRenderer.SetPosition(2, new Vector2(worldPosX + cellSize, worldPosY + cellSize));
         lineRenderer.SetPosition(3, new Vector2(worldPosX, worldPosY + cellSize));
         lineRenderer.SetPosition(4, new Vector2(worldPosX, worldPosY));
+        lineArray[_x, _y] = lineRenderer;
     }
 
     public Vector2 getWorldPosition(int _x, int _y)
@@ -110,6 +113,23 @@ public class Grid <TGridObjects>
         if (GlobalVariables.debug)
         {
             //Debug.Log(_text);
+        }
+    }
+
+    public void setLineRenderColor(int _x, int _y, Color _color)
+    {
+        if (_x >= 0 && _x < width && _y >= 0 && _y < height)
+        {
+            lineArray[_x, _y].startColor=_color;
+            lineArray[_x, _y].endColor = _color;
+        }
+    }
+
+    public void setLineRenderLayerOrder(int _x, int _y, int _order)
+    {
+        if (_x >= 0 && _x < width && _y >= 0 && _y < height)
+        {
+            lineArray[_x, _y].sortingOrder = _order;
         }
     }
 }

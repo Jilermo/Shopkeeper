@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TestFloorGrid : MonoBehaviour
 {
-    int width = 21;
-    int height = 12;
+    int width = 33;
+    int height = 15;
     float size = 0.474f;
-    Vector2 originPosition = new Vector2(-5.152f, -2f);
+    Vector2 originPosition = new Vector2(-8.01f, -3.395f);
     public GameObject linePrefab;
     public Transform linesParentTransform;
 

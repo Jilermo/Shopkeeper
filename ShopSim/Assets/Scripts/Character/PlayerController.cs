@@ -11,6 +11,7 @@ public class PlayerController : CharacterController
     List<FloorGridClass> currentPath;
     bool traversing=false;
 
+    bool controllingPlayer = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,13 +33,27 @@ public class PlayerController : CharacterController
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        /*
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector2 clickPosition = GetMouseWorldPosition();
+            Vector2Int floorGridXY = floorGrid.floorGrid.GetGrid().GetXY(clickPosition);
+            floorGrid.floorGrid.GetGrid().GetGridObject(floorGridXY.x, floorGridXY.y).setWalkable(!floorGrid.floorGrid.GetGrid().GetGridObject(floorGridXY.x, floorGridXY.y).getWalkable());
+            
+            //grid.SetGridObject(GetMouseWorldPosition(),true);
+        }
+        */
+
+        if (Input.GetMouseButtonDown(0) && GlobalVariables.controllingPlayer)
         {
             Vector2 startPoint = GetCharacterPosition();
             Vector2 endPoint = GetMouseWorldPosition();
             currentPath = floorGrid.FindPath(startPoint,endPoint);
-            currentPath.RemoveAt(0);
-            checkNextDirection();
+            if (currentPath!=null)
+            {
+                currentPath.RemoveAt(0);
+                checkNextDirection();
+            }
             //grid.SetGridObject(GetMouseWorldPosition(),true);
         }
 
