@@ -9,9 +9,10 @@ public class StandButtonScript : MonoBehaviour
 
     public void retrieveIndex()
     {
-        if (GlobalVariables.saveData.numberOfCoins >= (50+(index*100)))
+        if (GlobalVariables.saveData.getNumberOfCoins() >= (50+(index*100)))
         {
-            GlobalVariables.saveData.numberOfCoins = GlobalVariables.saveData.numberOfCoins - (50 + (index * 100));
+            GlobalVariables.saveData.setNumberOfCoins(GlobalVariables.saveData.getNumberOfCoins() - (50 + (index * 100)));
+            
             selectClothStandMenu.buyClothStand(index);
         }
        

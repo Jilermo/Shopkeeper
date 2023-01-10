@@ -6,8 +6,8 @@ public static class GlobalVariables
 {
     public class ClothStandSave
     {
-        float x;
-        float y;
+        public float x;
+        public float y;
 
         int clothStandType;
 
@@ -47,8 +47,9 @@ public static class GlobalVariables
 
     public class SaveData
     {
-        public int numberOfCoins;
-        public int popularityPoints;
+        public int numberOfDays;
+        private int numberOfCoins;
+        private int popularityPoints;
 
         public int bodyIndex;
         public int outfitIndex;
@@ -69,6 +70,7 @@ public static class GlobalVariables
 
         public SaveData()
         {
+            numberOfDays = 0;
             numberOfCoins = 1000;
             popularityPoints = 1;
 
@@ -99,10 +101,14 @@ public static class GlobalVariables
             unlockedObjectCategories.Add(0);
             unlockedObjectCategories.Add(1);
             unlockedObjectCategories.Add(2);
+
+            GameManager.changedCoins(numberOfCoins);
+            GameManager.changedPopularityPoints(popularityPoints);
         }
 
-        public SaveData(int numberOfCoins, int popularityPoints, int bodyIndex, int outfitIndex, int eyeIndex, int accesoryIndex, int hairstyleIndex, List<ClothStandSave> clothStands, List<int> unlockedBodies, List<int> unlockedOutfits, List<int> unlockedEyes, List<int> unlockedAccesories, List<int> unlockedHairstyles, List<int> unlockedObjectCategories,List<PlacedCommonObjects> placedCommonObjects)
+        public SaveData(int _numberOfDays,int numberOfCoins, int popularityPoints, int bodyIndex, int outfitIndex, int eyeIndex, int accesoryIndex, int hairstyleIndex, List<ClothStandSave> clothStands, List<int> unlockedBodies, List<int> unlockedOutfits, List<int> unlockedEyes, List<int> unlockedAccesories, List<int> unlockedHairstyles, List<int> unlockedObjectCategories,List<PlacedCommonObjects> placedCommonObjects)
         {
+            numberOfDays = _numberOfDays;
             this.numberOfCoins = numberOfCoins;
             this.popularityPoints = popularityPoints;
             this.bodyIndex = bodyIndex;
@@ -118,6 +124,29 @@ public static class GlobalVariables
             this.unlockedAccesories = unlockedAccesories;
             this.unlockedHairstyles = unlockedHairstyles;
             this.unlockedObjectCategories = unlockedObjectCategories;
+
+        }
+
+        public int getNumberOfCoins()
+        {
+            return numberOfCoins;
+        }
+
+        public void setNumberOfCoins(int _number)
+        {
+            numberOfCoins=_number;
+            
+        }
+
+        public int getNumberOfPoints()
+        {
+            return popularityPoints;
+        }
+
+        public void setNumberOfPoints(int _points)
+        {
+            popularityPoints = _points;
+            
         }
     }
 

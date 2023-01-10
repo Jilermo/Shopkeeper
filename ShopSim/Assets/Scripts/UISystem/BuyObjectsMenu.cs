@@ -78,9 +78,9 @@ public class BuyObjectsMenu : UIMenuClass
 
     public void buyCategory()
     {
-        if (GlobalVariables.saveData.numberOfCoins >= GlobalVariables.categoryBuyPrice)
+        if (GlobalVariables.saveData.getNumberOfCoins() >= GlobalVariables.categoryBuyPrice)
         {
-            GlobalVariables.saveData.numberOfCoins = GlobalVariables.saveData.numberOfCoins - GlobalVariables.categoryBuyPrice;
+            GlobalVariables.saveData.setNumberOfCoins(GlobalVariables.saveData.getNumberOfCoins() - GlobalVariables.categoryBuyPrice);
             unlockCategory();
         }
     }

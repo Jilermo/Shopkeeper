@@ -63,9 +63,10 @@ public class ClothButtonScript : MonoBehaviour
     {
         if (!active)
         {
-            if (GlobalVariables.saveData.numberOfCoins>=GlobalVariables.clothsPrices)
+            if (GlobalVariables.saveData.getNumberOfCoins()>=GlobalVariables.clothsPrices)
             {
-                GlobalVariables.saveData.numberOfCoins= GlobalVariables.saveData.numberOfCoins - GlobalVariables.clothsPrices;
+
+                GlobalVariables.saveData.setNumberOfCoins(GlobalVariables.saveData.getNumberOfCoins() - GlobalVariables.clothsPrices);
                 active = true;
                 mySprite.color = Color.white;
                 addToSaveData();

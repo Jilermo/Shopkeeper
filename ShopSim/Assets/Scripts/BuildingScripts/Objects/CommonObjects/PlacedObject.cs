@@ -70,6 +70,7 @@ public class PlacedObject : MonoBehaviour
     {
         quitClothStand();
         commonObjectSave = new GlobalVariables.PlacedCommonObjects(spriteRenderer.bounds.center.x, spriteRenderer.bounds.center.y, index, categoryIndex);
+        GlobalVariables.saveData.commonObjects.Add(commonObjectSave);
     }
 
     public void quitClothStand()
@@ -109,12 +110,19 @@ public class PlacedObject : MonoBehaviour
 
     public void sell()
     {
-        GlobalVariables.saveData.numberOfCoins += GlobalVariables.objectsPrices;
+        GlobalVariables.saveData.setNumberOfCoins(GlobalVariables.objectsPrices+ GlobalVariables.saveData.getNumberOfCoins());
         Vector3 _xmin = spriteRenderer.bounds.min;
         Vector3 _xmax = spriteRenderer.bounds.max;
         floorGrid.floorGrid.setCellsNotWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y));
         quitClothStand();
         Destroy(gameObject);
+    }
+
+    public FloorGridClass getWalkableNeighbour()
+    {
+        Vector3 _xmin = spriteRenderer.bounds.min;
+        Vector3 _xmax = spriteRenderer.bounds.max;
+        return floorGrid.floorGrid.checkForNeighbours(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y));
     }
 
 }

@@ -75,6 +75,7 @@ public class ClothStand : MonoBehaviour
     {
         quitClothStand();
         clothStandSave = new GlobalVariables.ClothStandSave(spriteRenderer.bounds.center.x, spriteRenderer.bounds.center.y, ClothStandIndex, clothStandCustomization.outfitIndex, clothStandCustomization.eyesIndex, clothStandCustomization.accesoryIndex, clothStandCustomization.hairIndex);
+        GlobalVariables.saveData.clothStands.Add(clothStandSave);
     }
 
     public void quitClothStand()
@@ -114,11 +115,19 @@ public class ClothStand : MonoBehaviour
 
     public void sell()
     {
-        GlobalVariables.saveData.numberOfCoins += (50 + (ClothStandIndex * 100));
+
+        GlobalVariables.saveData.setNumberOfCoins(GlobalVariables.saveData.getNumberOfCoins() + (50 + (ClothStandIndex * 100))) ;
         Vector3 _xmin = spriteRenderer.bounds.min;
         Vector3 _xmax = spriteRenderer.bounds.max;
         floorGrid.floorGrid.setCellsNotWalkable(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y));
         quitClothStand();
         Destroy(gameObject);
+    }
+
+    public FloorGridClass getWalkableNeighbour()
+    {
+        Vector3 _xmin = spriteRenderer.bounds.min;
+        Vector3 _xmax = spriteRenderer.bounds.max;
+        return floorGrid.floorGrid.checkForNeighbours(new Vector2(_xmin.x, _xmax.x), new Vector2(_xmin.y, _xmax.y));
     }
 }

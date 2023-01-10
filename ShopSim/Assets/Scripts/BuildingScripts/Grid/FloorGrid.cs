@@ -319,4 +319,85 @@ public class FloorGrid
 
         return true;
     }
+
+    public FloorGridClass checkForNeighbours(Vector2 _x, Vector2 _y)
+    {
+        float _stepX = size / 2;
+        float _stepY = size / 2;
+        int _stepsX = Mathf.CeilToInt(Mathf.Abs(_x.x - _x.y) / _stepX);
+        int _stepsY = Mathf.CeilToInt(Mathf.Abs(_y.x - _y.y) / _stepY);
+
+        if (_x.x > _x.y)
+        {
+            _stepX = -_stepX;
+        }
+        if (_y.x > _y.y)
+        {
+            _stepY = -_stepY;
+        }
+
+        for (int c = 0; c < _stepsX; c++)
+        {
+            for (int r = 0; r < _stepsY; r++)
+            {
+                float _xToCheck = _x.x + _stepX * c;
+                if (_xToCheck > _x.y)
+                {
+                    _xToCheck = _x.y;
+                }
+                float _yToCheck = _y.x + _stepY * r;
+                if (_yToCheck > _y.y)
+                {
+                    _yToCheck = _y.y;
+                }
+                Vector2 _worldPos = new Vector2(_xToCheck, _yToCheck);
+                Vector2Int _cellPosition = grid.GetXY(_worldPos);
+                if (!checkifCellIsValid(_cellPosition.x, _cellPosition.y))
+                {
+                    return null;
+                }
+                FloorGridClass _floorGridClass = GetNeighboursList2(grid.GetGridObject(_cellPosition.x, _cellPosition.y));
+                if (_floorGridClass!=null)
+                {
+                    return _floorGridClass;
+                }
+            }
+        }
+        return null;
+    }
+
+    private FloorGridClass GetNeighboursList2(FloorGridClass _currentFloorGrid)
+    {
+        List<FloorGridClass> neighbours = new List<FloorGridClass>();
+        if (_currentFloorGrid.getX() - 1 >= 0)
+        {
+            if (grid.GetGridObject(_currentFloorGrid.getX() - 1, _currentFloorGrid.getY()).getWalkable())
+            {
+                return grid.GetGridObject(_currentFloorGrid.getX() - 1, _currentFloorGrid.getY());
+            }
+            
+        }
+        if (_currentFloorGrid.getX() + 1 < grid.getWidth())
+        {
+            if (grid.GetGridObject(_currentFloorGrid.getX() + 1, _currentFloorGrid.getY()).getWalkable())
+            {
+                return grid.GetGridObject(_currentFloorGrid.getX() + 1, _currentFloorGrid.getY());
+            }
+        }
+        if (_currentFloorGrid.getY() - 1 >= 0)
+        {
+            if (grid.GetGridObject(_currentFloorGrid.getX(), _currentFloorGrid.getY() - 1).getWalkable())
+            {
+                return grid.GetGridObject(_currentFloorGrid.getX(), _currentFloorGrid.getY() - 1);
+            }
+        }
+        if (_currentFloorGrid.getY() + 1 < grid.getHeight())
+        {
+            if (grid.GetGridObject(_currentFloorGrid.getX(), _currentFloorGrid.getY() + 1).getWalkable())
+            {
+                return grid.GetGridObject(_currentFloorGrid.getX(), _currentFloorGrid.getY() + 1);
+            }
+        }
+        return null;
+    }
 }

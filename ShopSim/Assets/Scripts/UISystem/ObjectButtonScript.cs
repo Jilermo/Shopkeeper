@@ -34,9 +34,10 @@ public class ObjectButtonScript : MonoBehaviour
     {
         if (active)
         {
-            if (GlobalVariables.saveData.numberOfCoins >= GlobalVariables.objectsPrices)
+            if (GlobalVariables.saveData.getNumberOfCoins() >= GlobalVariables.objectsPrices)
             {
-                GlobalVariables.saveData.numberOfCoins = GlobalVariables.saveData.numberOfCoins - GlobalVariables.objectsPrices;
+                GlobalVariables.saveData.setNumberOfCoins(GlobalVariables.saveData.getNumberOfCoins() - GlobalVariables.objectsPrices);
+                
                 buyObjectsMenu.BuyObject(index,categoryIndex);
             }
         }
